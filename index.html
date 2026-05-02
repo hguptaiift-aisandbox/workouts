@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Runner's Bodyweight 25</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #141414;
+    --bg-elevated: #1c1c1c;
+    --ink: #f5f3ed;
+    --ink-dim: #8a8580;
+    --ink-faint: #4a4640;
+    --accent: #ff5722;
+    --accent-glow: #ff5722;
+    --rule: #2a2622;
+    --done: #6ba368;
+  }
+  
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  
+  body {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0 80px 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255,87,34,0.08), transparent 60%),
+      var(--bg);
+    min-height: 100vh;
+  }
+  
+  /* === HEADER === */
+  .hero {
+    padding: 32px 24px 28px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  
+  .title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    margin-bottom: 8px;
+  }
+  
+  .title .num {
+    color: var(--accent);
+    font-style: italic;
+  }
+  
+  .subtitle {
+    font-family: 'Archivo', sans-serif;
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.4;
+    max-width: 28ch;
+  }
+  
+  /* Stats strip */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 24px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .stat {
+    padding: 14px 12px;
+    text-align: center;
+    border-right: 1px solid var(--rule);
+    background: var(--bg-card);
+  }
+  .stat:last-child { border-right: none; }
+  
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  
+  /* === SECTION HEADER === */
+  .section-head {
+    padding: 28px 24px 14px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+  }
+  
+  .section-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  
+  /* === EXERCISE CARDS === */
+  .exercises {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .ex {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  
+  .ex.done {
+    border-color: var(--done);
+    opacity: 0.65;
+  }
+  
+  .ex-head {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+  }
+  
+  .ex-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--accent);
+    line-height: 1;
+    font-style: italic;
+  }
+  
+  .ex-name {
+    font-family: 'Archivo', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  
+  .ex-reps {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+  
+  .ex-toggle {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--ink-faint);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  
+  .ex.done .ex-toggle {
+    background: var(--done);
+    border-color: var(--done);
+  }
+  
+  .ex.done .ex-toggle::after {
+    content: '✓';
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  
+  /* Expandable form section */
+  .ex-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    border-top: 0 solid var(--rule);
+  }
+  
+  .ex.open .ex-body {
+    max-height: 500px;
+    border-top: 1px solid var(--rule);
+  }
+  
+  .ex-content {
+    padding: 16px;
+  }
+  
+  .ex-why {
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+    line-height: 1.55;
+    padding-left: 10px;
+    border-left: 2px solid var(--accent);
+  }
+  
+  .ex-why strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  
+  .form-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .form-list li {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 5px 0 5px 18px;
+    position: relative;
+    color: var(--ink);
+  }
+  
+  .form-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  
+  .form-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin: 14px 0 6px;
+    font-weight: 700;
+  }
+  
+  .form-label:first-child { margin-top: 0; }
+  
+  /* Visual demo box */
+  .demo {
+    margin: 14px 0 4px;
+    background: var(--bg-elevated);
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 110px;
+  }
+  
+  /* === SESSION SUMMARY === */
+  .session-card {
+    margin: 28px 16px 0;
+    background: linear-gradient(135deg, rgba(255,87,34,0.12), rgba(255,87,34,0.02));
+    border: 1px solid rgba(255,87,34,0.3);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  
+  .session-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+    color: var(--accent);
+  }
+  
+  .session-rules {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 16px;
+  }
+  
+  .rule {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  
+  .rule-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  
+  /* === PROGRESSION === */
+  .prog-card {
+    margin: 16px 16px 0;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  
+  .prog-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  
+  .prog-card .sub {
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-bottom: 14px;
+  }
+  
+  .prog-step {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .prog-step:last-child { border-bottom: none; }
+  
+  .prog-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    padding-top: 1px;
+  }
+  
+  .prog-step-text {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  
+  /* === FOOTER === */
+  .footer {
+    text-align: center;
+    padding: 32px 24px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  
+  /* === TIMER BUTTON IN EXERCISE === */
+  .timer-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 10px 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 12px;
+    width: 100%;
+    transition: all 0.15s;
+  }
+  
+  .timer-btn:active { transform: scale(0.98); }
+  
+  /* === FULLSCREEN TIMER === */
+  .timer-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-image:
+      radial-gradient(ellipse 90% 50% at 50% 30%, rgba(255,87,34,0.15), transparent 60%),
+      var(--bg);
+  }
+  
+  .timer-overlay.show { display: flex; }
+  
+  .timer-overlay.warn {
+    background-image:
+      radial-gradient(ellipse 90% 50% at 50% 30%, rgba(255,87,34,0.35), transparent 50%),
+      var(--bg);
+  }
+  
+  .timer-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  
+  .timer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--ink);
+    margin-bottom: 36px;
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+  
+  .timer-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 180px;
+    color: var(--accent);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+  
+  .timer-overlay.warn .timer-display { color: #ff8a50; }
+  .timer-overlay.done .timer-display { color: var(--done); }
+  
+  .timer-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  
+  .timer-progress {
+    width: 100%;
+    max-width: 280px;
+    height: 3px;
+    background: var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 36px;
+  }
+  
+  .timer-progress-bar {
+    height: 100%;
+    background: var(--accent);
+    width: 100%;
+    transition: width 1s linear;
+  }
+  
+  .timer-controls {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .timer-btn-secondary, .timer-btn-primary {
+    flex: 1;
+    padding: 16px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--rule);
+    transition: all 0.15s;
+  }
+  
+  .timer-btn-secondary {
+    background: var(--bg-card);
+    color: var(--ink);
+  }
+  
+  .timer-btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  
+  .timer-btn-secondary:active, .timer-btn-primary:active {
+    transform: scale(0.98);
+  }
+  
+  /* Rest timer button in round tracker */
+  .rest-timer-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* === ROUND TRACKER === */
+  .round-tracker {
+    margin: 16px 16px 0;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .round-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+  
+  .round-dots {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink-faint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: var(--ink-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg-elevated);
+  }
+  
+  .dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+  
+  .reset-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 18px auto 0;
+    display: block;
+    transition: all 0.2s;
+  }
+  
+  .reset-btn:active {
+    background: var(--bg-card);
+    color: var(--ink);
+  }
+  
+  /* SVG illustrations - styled stick figures */
+  svg.figure { width: 80px; height: 80px; }
+  svg.figure .body { stroke: var(--accent); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  svg.figure .head { fill: var(--accent); stroke: none; }
+  svg.figure .ground { stroke: var(--ink-faint); stroke-width: 1; stroke-dasharray: 2 3; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Travel-proof strength</div>
+  <h1 class="title">Bodyweight <span class="num">25</span></h1>
+  <p class="subtitle">The marathon-quad insurance plan. No gym. No excuses.</p>
+  
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">25<span style="font-size:13px;color:var(--ink-dim);"> min</span></div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3<span style="font-size:13px;color:var(--ink-dim);">×</span></div>
+      <div class="stat-label">Rounds</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2<span style="font-size:13px;color:var(--ink-dim);">/wk</span></div>
+      <div class="stat-label">Frequency</div>
+    </div>
+  </div>
+</header>
+
+<!-- Round tracker -->
+<div class="round-tracker">
+  <div class="round-label">Rounds<br>Done</div>
+  <div class="round-dots">
+    <div class="dot" data-round="1">1</div>
+    <div class="dot" data-round="2">2</div>
+    <div class="dot" data-round="3">3</div>
+  </div>
+  <button class="rest-timer-btn" onclick="startTimer(75, 'Rest between rounds')">Rest<br>75s</button>
+</div>
+
+<div class="section-head">
+  <div class="section-title">The Six</div>
+  <div class="section-meta">Tap to expand</div>
+</div>
+
+<div class="exercises">
+
+  <!-- 1. Squat -->
+  <div class="ex">
+    <div class="ex-head">
+      <div class="ex-num">01</div>
+      <div>
+        <div class="ex-name">Bodyweight Squat</div>
+        <div class="ex-reps">15 reps  ·  2 sec down · 1 sec up</div>
+      </div>
+      <div class="ex-toggle"></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-content">
+        <div class="ex-why"><strong>The big one.</strong> Direct quad and glute loading. Builds the muscular endurance that failed at km 32.</div>
+        
+        <div class="form-label">Form</div>
+        <ul class="form-list">
+          <li>Feet shoulder-width, toes slightly out</li>
+          <li>Sit back like reaching for a chair</li>
+          <li>Knees track over toes — never cave inward</li>
+          <li>Chest up, eyes forward</li>
+          <li>Thighs parallel to floor or below</li>
+        </ul>
+        
+        <div class="demo">
+          <svg class="figure" viewBox="0 0 100 100">
+            <line class="ground" x1="10" y1="92" x2="90" y2="92"/>
+            <circle class="head" cx="50" cy="22" r="6"/>
+            <path class="body" d="M50 28 L50 50 M50 50 L35 70 L35 88 M50 50 L65 70 L65 88 M50 35 L32 45 M50 35 L68 45"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Reverse Lunge -->
+  <div class="ex">
+    <div class="ex-head">
+      <div class="ex-num">02</div>
+      <div>
+        <div class="ex-name">Reverse Lunge</div>
+        <div class="ex-reps">10 reps each leg  ·  alternate</div>
+      </div>
+      <div class="ex-toggle"></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-content">
+        <div class="ex-why"><strong>Single-leg matters.</strong> Running is single-leg by nature. Bilateral squats alone won't fix the durability gap.</div>
+        
+        <div class="form-label">Form</div>
+        <ul class="form-list">
+          <li>Step backward into a long stride</li>
+          <li>Drop back knee toward floor (don't slam it)</li>
+          <li>Push through front heel to return</li>
+          <li>Keep front knee over front foot</li>
+          <li>Torso upright, ribs over hips</li>
+        </ul>
+        
+        <div class="demo">
+          <svg class="figure" viewBox="0 0 100 100">
+            <line class="ground" x1="10" y1="92" x2="90" y2="92"/>
+            <circle class="head" cx="42" cy="20" r="6"/>
+            <path class="body" d="M42 26 L42 50 M42 50 L30 90 M42 50 L62 65 L75 90 M42 35 L26 38 M42 35 L58 32"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Glute Bridge -->
+  <div class="ex">
+    <div class="ex-head">
+      <div class="ex-num">03</div>
+      <div>
+        <div class="ex-name">Single-Leg Glute Bridge</div>
+        <div class="ex-reps">12 reps each leg  ·  squeeze at top</div>
+      </div>
+      <div class="ex-toggle"></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-content">
+        <div class="ex-why"><strong>Glutes save quads.</strong> Weak glutes mean quads do extra work and fail first. This is the corrective.</div>
+        
+        <div class="form-label">Form</div>
+        <ul class="form-list">
+          <li>Lie on back, one knee bent, foot flat</li>
+          <li>Other leg extended straight up</li>
+          <li>Drive through planted heel</li>
+          <li>Lift hips until body forms a line</li>
+          <li>Squeeze glute hard at the top, hold 1 sec</li>
+        </ul>
+        
+        <div class="demo">
+          <svg class="figure" viewBox="0 0 100 100">
+            <line class="ground" x1="10" y1="80" x2="90" y2="80"/>
+            <circle class="head" cx="22" cy="62" r="6"/>
+            <path class="body" d="M28 62 L55 50 M55 50 L70 70 L70 80 M55 50 L80 25"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Push-up -->
+  <div class="ex">
+    <div class="ex-head">
+      <div class="ex-num">04</div>
+      <div>
+        <div class="ex-name">Push-Up</div>
+        <div class="ex-reps">10–15 reps  ·  knees if needed</div>
+      </div>
+      <div class="ex-toggle"></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-content">
+        <div class="ex-why"><strong>Form insurance.</strong> Marathon arm carriage at km 35+ degrades when shoulders and upper back are weak.</div>
+        
+        <div class="form-label">Form</div>
+        <ul class="form-list">
+          <li>Hands slightly wider than shoulders</li>
+          <li>Body in straight line — no sagging hips</li>
+          <li>Lower until chest near floor</li>
+          <li>Elbows at ~45° from body, not flared</li>
+          <li>Drop to knees if form breaks</li>
+        </ul>
+        
+        <div class="demo">
+          <svg class="figure" viewBox="0 0 100 100">
+            <line class="ground" x1="10" y1="82" x2="90" y2="82"/>
+            <circle class="head" cx="22" cy="58" r="6"/>
+            <path class="body" d="M28 58 L75 58 L80 80 M40 58 L40 80 M55 58 L55 80"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Plank -->
+  <div class="ex">
+    <div class="ex-head">
+      <div class="ex-num">05</div>
+      <div>
+        <div class="ex-name">Forward Plank</div>
+        <div class="ex-reps">45 seconds  ·  brace hard</div>
+      </div>
+      <div class="ex-toggle"></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-content">
+        <div class="ex-why"><strong>Pelvic stability.</strong> A wobbling pelvis at km 30 wastes energy and overloads the quads — exactly your wall mechanism.</div>
+        
+        <div class="form-label">Form</div>
+        <ul class="form-list">
+          <li>Forearms on ground, elbows under shoulders</li>
+          <li>Body in straight line, head to heels</li>
+          <li>Squeeze glutes, brace abs as if punched</li>
+          <li>No sagging hips, no piked butt</li>
+          <li>Neutral neck — look at floor between hands</li>
+        </ul>
+        
+        <div class="demo">
+          <svg class="figure" viewBox="0 0 100 100">
+            <line class="ground" x1="10" y1="82" x2="90" y2="82"/>
+            <circle class="head" cx="20" cy="62" r="6"/>
+            <path class="body" d="M26 62 L80 62 L82 80 M30 62 L30 80"/>
+          </svg>
+        </div>
+        <button class="timer-btn" onclick="event.stopPropagation(); startTimer(45, 'Forward Plank')">Start 45s timer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Side Plank -->
+  <div class="ex">
+    <div class="ex-head">
+      <div class="ex-num">06</div>
+      <div>
+        <div class="ex-name">Side Plank</div>
+        <div class="ex-reps">30 sec each side  ·  hips up</div>
+      </div>
+      <div class="ex-toggle"></div>
+    </div>
+    <div class="ex-body">
+      <div class="ex-content">
+        <div class="ex-why"><strong>Glute medius.</strong> The most underdone area for time-poor runners. Prevents knee cave and is a major injury-prevention exercise.</div>
+        
+        <div class="form-label">Form</div>
+        <ul class="form-list">
+          <li>On one forearm, elbow under shoulder</li>
+          <li>Body straight, hips lifted off floor</li>
+          <li>Stack feet (advanced) or stagger them (easier)</li>
+          <li>Don't let bottom hip drop</li>
+          <li>Top arm stretched up or hand on hip</li>
+        </ul>
+        
+        <div class="demo">
+          <svg class="figure" viewBox="0 0 100 100">
+            <line class="ground" x1="10" y1="82" x2="90" y2="82"/>
+            <circle class="head" cx="22" cy="55" r="6"/>
+            <path class="body" d="M22 61 L22 80 M22 70 L80 70 L82 80 M50 70 L50 35"/>
+          </svg>
+        </div>
+        <button class="timer-btn" onclick="event.stopPropagation(); startTimer(30, 'Side Plank — Side 1')">Start 30s timer</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Session rules -->
+<div class="session-card">
+  <h3>Session Rules</h3>
+  <div class="session-rules">
+    <div class="rule">
+      <span class="rule-num">01</span>
+      Rest 60–90 sec between rounds. Move briskly within a round.
+    </div>
+    <div class="rule">
+      <span class="rule-num">02</span>
+      Hard floor: 2× per week, every week. Travel weeks too.
+    </div>
+    <div class="rule">
+      <span class="rule-num">03</span>
+      Form > reps. Stop a set if technique breaks.
+    </div>
+    <div class="rule">
+      <span class="rule-num">04</span>
+      Best paired with: Tue + Fri. Never the day before a long run.
+    </div>
+  </div>
+</div>
+
+<!-- Progression -->
+<div class="prog-card">
+  <h3>Progression Ladder</h3>
+  <div class="sub">When 3 rounds feels easy, climb the ladder in this order</div>
+  
+  <div class="prog-step">
+    <div class="prog-step-num">01</div>
+    <div class="prog-step-text">Add a 4th round before adding reps</div>
+  </div>
+  <div class="prog-step">
+    <div class="prog-step-num">02</div>
+    <div class="prog-step-text">Add reps: squat → 20, lunge → 12/leg, push-up → 18</div>
+  </div>
+  <div class="prog-step">
+    <div class="prog-step-num">03</div>
+    <div class="prog-step-text">Push-ups: progress to decline (feet on chair) before more reps</div>
+  </div>
+  <div class="prog-step">
+    <div class="prog-step-num">04</div>
+    <div class="prog-step-text">Squats: progress toward pistol squats (single-leg). This is where real marathon-specific durability is built.</div>
+  </div>
+  <div class="prog-step">
+    <div class="prog-step-num">05</div>
+    <div class="prog-step-text">Planks: extend to 60 sec / 45 sec side. Then add weight (backpack).</div>
+  </div>
+</div>
+
+<button class="reset-btn" onclick="resetAll()">Reset session</button>
+
+<div class="footer">Built for the road · Coach's plan v1</div>
+
+<!-- Timer Overlay -->
+<div class="timer-overlay" id="timerOverlay">
+  <div class="timer-label" id="timerLabel">Hold</div>
+  <div class="timer-name" id="timerName">Forward Plank</div>
+  <div class="timer-display" id="timerDisplay">45</div>
+  <div class="timer-unit">seconds</div>
+  <div class="timer-progress"><div class="timer-progress-bar" id="timerProgress"></div></div>
+  <div class="timer-controls">
+    <button class="timer-btn-secondary" id="timerCancel">Cancel</button>
+    <button class="timer-btn-primary" id="timerPause">Pause</button>
+  </div>
+</div>
+
+<script>
+  // Toggle exercise expansion
+  document.querySelectorAll('.ex-head').forEach(head => {
+    head.addEventListener('click', (e) => {
+      const ex = head.closest('.ex');
+      if (e.target.classList.contains('ex-toggle')) {
+        e.stopPropagation();
+        ex.classList.toggle('done');
+        return;
+      }
+      ex.classList.toggle('open');
+    });
+  });
+  
+  // Round tracker
+  document.querySelectorAll('.dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      dot.classList.toggle('active');
+    });
+  });
+  
+  // Reset
+  function resetAll() {
+    document.querySelectorAll('.ex').forEach(e => {
+      e.classList.remove('done');
+      e.classList.remove('open');
+    });
+    document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+  }
+  
+  // ===== TIMER =====
+  let timerInterval = null;
+  let timerRemaining = 0;
+  let timerTotal = 0;
+  let timerPaused = false;
+  let audioCtx = null;
+  
+  const overlay = document.getElementById('timerOverlay');
+  const display = document.getElementById('timerDisplay');
+  const nameEl = document.getElementById('timerName');
+  const labelEl = document.getElementById('timerLabel');
+  const progress = document.getElementById('timerProgress');
+  const pauseBtn = document.getElementById('timerPause');
+  const cancelBtn = document.getElementById('timerCancel');
+  
+  function beep(freq = 800, duration = 0.15, volume = 0.3) {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {}
+  }
+  
+  function vibrate(pattern) {
+    if (navigator.vibrate) navigator.vibrate(pattern);
+  }
+  
+  function startTimer(seconds, name) {
+    // Initialize audio context on user interaction (needed for iOS)
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    
+    timerTotal = seconds;
+    timerRemaining = seconds;
+    timerPaused = false;
+    nameEl.textContent = name;
+    labelEl.textContent = name.includes('Rest') ? 'Recovery' : 'Hold steady';
+    pauseBtn.textContent = 'Pause';
+    overlay.classList.remove('warn', 'done');
+    overlay.classList.add('show');
+    updateDisplay();
+    
+    // Keep screen awake if possible
+    if ('wakeLock' in navigator) {
+      navigator.wakeLock.request('screen').catch(() => {});
+    }
+    
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(tick, 1000);
+    
+    // Start beep
+    beep(600, 0.1);
+  }
+  
+  function tick() {
+    if (timerPaused) return;
+    timerRemaining--;
+    updateDisplay();
+    
+    // Final 3-second countdown beeps
+    if (timerRemaining <= 3 && timerRemaining > 0) {
+      beep(700, 0.12);
+      vibrate(80);
+      overlay.classList.add('warn');
+    }
+    
+    if (timerRemaining <= 0) {
+      finishTimer();
+    }
+  }
+  
+  function updateDisplay() {
+    display.textContent = Math.max(0, timerRemaining);
+    const pct = (timerRemaining / timerTotal) * 100;
+    progress.style.width = Math.max(0, pct) + '%';
+  }
+  
+  function finishTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    overlay.classList.remove('warn');
+    overlay.classList.add('done');
+    display.textContent = 'DONE';
+    display.style.fontSize = '110px';
+    // Triple beep + long vibrate
+    beep(900, 0.2);
+    setTimeout(() => beep(900, 0.2), 250);
+    setTimeout(() => beep(1100, 0.4), 500);
+    vibrate([200, 100, 200, 100, 400]);
+    
+    setTimeout(() => {
+      closeTimer();
+    }, 1800);
+  }
+  
+  function closeTimer() {
+    overlay.classList.remove('show', 'warn', 'done');
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = null;
+    display.style.fontSize = ''; // reset
+  }
+  
+  pauseBtn.addEventListener('click', () => {
+    timerPaused = !timerPaused;
+    pauseBtn.textContent = timerPaused ? 'Resume' : 'Pause';
+  });
+  
+  cancelBtn.addEventListener('click', closeTimer);
+</script>
+
+</body>
+</html>
